@@ -69,13 +69,13 @@ class AccessTokenCreate(PlaidBaseView):
         print(api_response)
 
         access_token = api_response['access_token']
-        item_id = api_response['institution_id']
-        institution = Institution.objects.create(user=self.request.user, item_id=item_id, access_token=access_token)
+        institution_id = api_response['institution_id']
+        institution = Institution.objects.create(user=self.request.user, item_id=institution_id, access_token=access_token)
         institution.save()
 
         data = {
             "access_token": access_token,
-            "institution_id": institution.item_id
+            "institution_id": institution.institution_id
         }
 
         return Response(data, status=status.HTTP_200_OK)
